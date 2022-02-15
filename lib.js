@@ -59,7 +59,7 @@ function convert2CSV(data){
     for(let i = 0; i < data.length; i++){
         for(let key in data[i]){
             // if data[i][key] is object then convert to string multi-line
-            if(typeof data[i][key] == 'object'){
+            if(typeof data[i][key] == 'object' || typeof data[i][key] == 'array'){
                 let string = '';
                 for(let key2 in data[i][key]){
                     string += data[i][key][key2] + '\n'
