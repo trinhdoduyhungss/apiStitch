@@ -58,8 +58,16 @@ function convert2CSV(data){
     let csv = '';
     for(let i = 0; i < data.length; i++){
         for(let key in data[i]){
-            //convert to string
-            csv += JSON.stringify(data[i][key]) + ','
+            // if data[i][key] is object then convert to string multi-line
+            if(typeof data[i][key] == 'object'){
+                let string = '';
+                for(let key2 in data[i][key]){
+                    string += data[i][key][key2] + '\n'
+                }
+                csv += string + ','
+            }else{
+                csv += data[i][key] + ','
+            }
         }
         csv += '\n'
     }
