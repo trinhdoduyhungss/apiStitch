@@ -56,7 +56,7 @@ function convertJson2Array(data){
 }
 function convert2CSV(data){
     let csv = '';
-    for(let i = 0; i < data.length; i++){
+    for(let i = 1; i < data.length; i++){
         for(let key in data[i]){
             // if data[i][key] is object then convert to string multi-line
             if(typeof data[i][key] == 'object' || typeof data[i][key] == 'array'){
