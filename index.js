@@ -14,7 +14,7 @@ app.use(function (req, res, next) { //allow cross origin requests
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.get('/', (req, res) => {
-    res.send('Hello World!')
+    res.send('<h1> Hello World! </h1>');
 })
 app.get('/getPatternData', async (req, res) => {
     let data = await lib.getPatternData();
@@ -37,5 +37,5 @@ app.get('/addData', async (req, res) => {
     res.send(JSON.stringify({'data':data}))
 })
 app.listen(app.get('port'), function () {
-    console.log("running: port")
+    console.log("running: port", app.get('port'))
 })
