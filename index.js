@@ -3,7 +3,7 @@ const lib = require('./lib');
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-const port = process.env.PORT || 3000;
+app.set('port', (process.env.PORT || 3333));
 app.use(function (req, res, next) { //allow cross origin requests
 	res.setHeader("Access-Control-Allow-Origin", "*");
 	res.header("Access-Control-Allow-Methods", "POST, PUT, OPTIONS, DELETE, GET");
@@ -36,4 +36,6 @@ app.get('/addData', async (req, res) => {
     let data = await lib.addData(req.query.databaseName, req.query.collectionName, req.query.data);
     res.send(JSON.stringify({'data':data}))
 })
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+app.listen(app.get('port'), function () {
+    console.log("running: port")
+})
