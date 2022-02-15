@@ -44,11 +44,23 @@ async function getDataByQuery(databaseName, collectionName, query){
 }
 function convertJson2Array(data){
     let header = Object.keys(data[0]);
+    header = header.splice(1, header.length - 1);
     let array = [header];
     for(let i = 0; i < data.length; i++){
         let row = [];
         for(let j = 0; j < header.length; j++){
-            row.push(data[i][header[j]])
+            if(typeof data[i][header[j]] == 'object' || typeof data[i][header[j]] == 'array'){
+                let string = '';
+                for(let key2 in data[i][header[j]]){
+                    string += data[i][header[j]][key2]
+                    if(key2 != Object.keys(data[i][header[j]]).length - 1){
+                        string += ' \r\n'
+                    }
+                }
+                row.push(string)
+            }else{
+                row.push(data[i][header[j]])
+            }
         }
         array.push(row)
     }
@@ -56,20 +68,33 @@ function convertJson2Array(data){
 }
 function convert2CSV(data){
     let csv = '';
-    for(let i = 1; i < data.length; i++){
+    for(let i = 0; i < data.length; i++){
+        let line = ''
         for(let key in data[i]){
             // if data[i][key] is object then convert to string multi-line
             if(typeof data[i][key] == 'object' || typeof data[i][key] == 'array'){
                 let string = '';
                 for(let key2 in data[i][key]){
-                    string += data[i][key][key2] + '\n'
+                    string += data[i][key][key2]
+                    if(key2 != Object.keys(data[i][key]).length - 1){
+                        string += ' \r\n'
+                    }
                 }
-                csv += string + ','
+                line += string
+                if (key != Object.keys(data[i]).length - 1){
+                    line += '\n'
+                }
             }else{
-                csv += data[i][key] + ','
+                line += data[i][key]
+                if (key != Object.keys(data[i]).length - 1){
+                    line += ','
+                }
             }
         }
-        csv += '\n'
+        csv += line
+        if (i != data.length - 1){
+            csv += '\n'
+        }
     }
     return csv
 }
