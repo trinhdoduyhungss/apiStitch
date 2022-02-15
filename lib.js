@@ -42,6 +42,18 @@ async function getDataByQuery(databaseName, collectionName, query){
         await client.close();
     }
 }
+function convertJson2Array(data){
+    let header = Object.keys(data[0]);
+    let array = [header];
+    for(let i = 0; i < data.length; i++){
+        let row = [];
+        for(let j = 0; j < header.length; j++){
+            row.push(data[i][header[j]])
+        }
+        array.push(row)
+    }
+    return array
+}
 function convert2CSV(data){
     let csv = '';
     for(let i = 0; i < data.length; i++){
@@ -84,5 +96,6 @@ module.exports = {
     convert2CSV,
     getDataByQuery,
     getAllData,
-    addData
+    addData,
+    convertJson2Array
 }

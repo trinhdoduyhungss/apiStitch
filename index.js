@@ -26,7 +26,15 @@ app.get('/getDataByQuery', async (req, res) => {
 })
 app.get('/getAllData', async (req, res) => {
     let data = await lib.getAllData(req.query.databaseName, req.query.collectionName);
-    res.send(JSON.stringify({'data':data}))
+    if(req.query.type == 'json'){
+        res.send(JSON.stringify({'data':data}))
+    }
+    else if(req.query.type == 'csv'){
+        res.send(lib.convert2CSV(lib.convertJson2Array(data)))
+    }
+    else if(req.query.type == 'array'){
+        res.send(JSON.stringify({'data':lib.convertJson2Array(data)}))
+    }
 })
 app.get('/convert2CSV', async (req, res) => {
     let data = await lib.convert2CSV(req.query.data);
