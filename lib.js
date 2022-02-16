@@ -54,7 +54,7 @@ function convertJson2Array(data){
                 for(let key2 in data[i][header[j]]){
                     string += data[i][header[j]][key2]
                     if(key2 != Object.keys(data[i][header[j]]).length - 1){
-                        string += ' ;'
+                        string += ';'
                     }
                 }
                 row.push(string)
